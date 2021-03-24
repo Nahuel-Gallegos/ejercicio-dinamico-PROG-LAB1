@@ -2,238 +2,104 @@
 #include <stdio.h>
 #include <stdlib.h>
 //setbuf(stdout,NULL);
-int multiplicacion (int numero1,int numero2);
-int division (int numero1, int numero2);
-int suma (int numero1,int numero2);
-int resta (int numero1,int numero2);
+float dividir (int numeroA, int numeroB, float* pResultado);//firma de la funcion
+float multiplicar (int numeroA,int numeroB,float* pResultado);
+float restar (int numeroA,int numeroB,float* pResultado);
+float sumar (int numeroA,int numeroB,float* pResultado);
 
-int main(int argc, char *argv[])
+int main(void)
 {
 	setbuf(stdout,NULL);
-	/*
-	 * 1 programa que pida un numero al usuario, desues hqe pida una operacion y despues que
-	 * pida otro numero.
-	 * segun la operacion ingresada, se llamara
-	 * a una funcion que ejecute la operacion
-	 * y luego mostrar al usuario el resultado.
-	 * el mostrar resultado NO puede estar dentro  de las funciones que crean
-	 *  para hacer la operacion. en la funcion dividir, validar no dividir por cero.
-	 */
-	int numeroIngresado;
-	int segundoNumero;
-	float resultado;
+
+
+	int numero1;
+	int segundoNumero=0;//CON INT ME INICIALIZA CON 0 Y NO PUEDO PONERLE OTRO VALOR
 	char operacion;
-
-	printf("Ingrese un numero: \n");
-	scanf("%d",&numeroIngresado);
-	printf("Elija la operacion que desea realizar: \n");
-	scanf("%c",&operacion);
-	printf("Ingrese un numero: \n");
-	scanf("%d",&segundoNumero);
-
-	if(operacion == '*')
-	{
-		resultado = multiplicacion (numeroIngresado,segundoNumero);
-	}
-	if(operacion == '/')
-	{
-		resultado = division (numeroIngresado,segundoNumero);
-	}
-	if(operacion == '-')
-	{
-		resultado = resta (numeroIngresado,segundoNumero);
-	}
-	if(operacion == '+')
-	{
-		resultado = suma (numeroIngresado,segundoNumero);
-	}
-
-	printf("El resultado de la operacion %c es: %.2f",operacion, resultado);
-
-
-	return 0;
-}
-
-int multiplicacion (int numero1,int numero2)
-{
-	int resultado;
-	resultado = numero1*numero2;
-
-	return resultado;
-}
-
-int division (int numero1, int numero2)
-{
 	float resultado;
-	while(numero2 == 0)
+
+	printf("Ingresa el primer numero: \n");
+	fflush(stdin);
+	scanf("%d",&numero1);
+	printf("Ingresa el segundo numero: \n");
+	fflush(stdin);
+	scanf("%i",&segundoNumero);
+	printf("Ingresa la operacion que realizarás: \n");
+	fflush(stdin);
+	scanf("%s",&operacion);
+
+	printf("%i",segundoNumero);
+	switch(operacion)
 	{
-		printf("Error, reingrese el segundo numero: \n");
-		scanf("%d",&numero2);
+		case '/':
+			dividir(numero1,segundoNumero,&resultado);
+			break;
+		case '*':
+			multiplicar(numero1,segundoNumero,&resultado);
+			break;
+		case '-':
+			restar(numero1,segundoNumero,&resultado);
+			break;
+		case '+':
+			sumar(numero1,segundoNumero,&resultado);
+			break;
 	}
-	resultado = (float)numero1/numero2;
 
-	return resultado;
-}
-
-int suma (int numero1,int numero2)
-{
-	int resultado;
-	resultado = numero1+numero2;
-
-	return resultado;
-}
-
-int resta (int numero1,int numero2)
-{
-	int resultado;
-	resultado = numero1-numero2;
-
-	return resultado;
-}
-/*
-
-Realizar un programa que solicite cinco números e imprima por pantalla el promedio,
-el máximo y el mínimo.
-
-Importante:
-A continuación encontraran el ejercicio resuelto y el video de la explicación de
-como resolverlo. Les recomendamos utilizar esta información luego de haber intentado
- resolver el ejercicio por sus propios medios, esto mejora significativamente el proceso
-  de aprendizaje.
- */
-/*
-	int buffer;
-	float promedio;
-	int maximo;
-	int minimo;
-	int acumulador=0;
-	int i;
-
-	for(i=0; i<5;i++)
+	if(operacion=='/')
 	{
-		printf("Ingrese un numero: \n");
-		scanf("%d",&buffer);
-
-		if(i==0)
+		if(dividir(numero1,segundoNumero,&resultado)==0)
 		{
-			maximo=buffer;
-			minimo=buffer;
+			printf("El resultado de la operacion %s es: %.2f",&operacion,resultado);
 		}
 		else
 		{
-			if(buffer<minimo)
-			{
-				minimo=buffer;
-			}
-			else
-			{
-				if(buffer>maximo)
-				{
-					maximo=buffer;
-				}
-			}
+			printf("Error, no se puede dividir por 0");
 		}
-		acumulador= acumulador+buffer;
-	}
-
-	promedio=(float)acumulador/i;
-
-	printf("El numero maximo ingresado es: %d\n",maximo);
-	printf("El numero minimo ingresado es: %d\n",minimo);
-	printf("Y el promedio es: %.2f",promedio);
-
-
-*/
-/*
-	 * Solicite dos valores numéricos al usuario distintos de cero *
-	- Asigne a las variables numero1 y numero2 los valores obtenidos
-	- Realice la resta de dichas variables
-	- Muestre el resultado por pantalla
-	- Muestre por pantalla la leyenda "Resultado positivo" en caso de ser mayor *
-	- Muestre por pantalla la leyenda "Resultado negativo" si es menor que cero *
-	 */
-/*
-	setbuf(stdout,NULL);
-
-	int a;
-	int b;
-	int resultado;
-
-	printf("\nIngrese 1 numero: ");
-	scanf("%d",&a);
-	while(a== 0)
-	{
-		printf("\nError, reingrese 1 numero: ");
-		scanf("%d",&a);
-	}
-
-	printf("\nIngrese 2 numero: ");
-	scanf("%d",&b);
-	while(b==0)
-	{
-		printf("\nError, reingrese 1 numero: ");
-		scanf("%d",&b);
-	}
-	resultado=a-b;
-
-	printf("\nEl resultado es: %d \n",resultado);
-	if(resultado>0){
-        printf("\nResultado positivo \n");
 	}
 	else
 	{
-		if(resultado<0)
+		printf("El resultado de la operacion %s es: %.2f",&operacion,resultado);
+	}
+
+
+	return EXIT_SUCCESS;
+}
+
+
+
+	float dividir (int numeroA, int numeroB, float* pResultado)
+	{
+
+		if(numeroB==0)
 		{
-			printf("\nResultado negativo \n");
+			return -1;
 		}
 		else
 		{
-			printf("El resultado es 0");
-		}
- */
+			*pResultado = (float)numeroA/numeroB;
 
-/*EJERCICIO 4 CLASE 1
-	 * - Solicite al usuario 10 números
-- Calcule cuántos son negativos y cuantos son positivos
-- Muestre por pantalla la cantidad de negativos y la cantidad de positivos
-	 */
-/*
-
-	int buffer;
-	int contadorNegativos=0;
-	int contadorPositivos=0;
-	int contadorCeros=0;
-
-	for(int i=0;i<10;i++)
-	{
-		printf("Ingrese un numero por favor: \n");
-		scanf("%d",&buffer);
-
-		if(buffer>0)
-		{
-			contadorPositivos++;
-		}
-		else
-		{
-			if(buffer<0)
-			{
-				contadorNegativos++;
-			}
-			else
-			{
-				contadorCeros++;
-			}
+			return 0;
 		}
 	}
 
-	printf("La cantidad de numeros postivos ingresados es: %d. \n",contadorPositivos);
-	printf("Y la cantidad de numeros negativos ingresados es: %d \n",contadorNegativos);
-	if(contadorCeros!=0)
+	float multiplicar (int numeroA,int numeroB,float* pResultado)
 	{
-		printf("Hay %d de ceros ingresados.", contadorCeros);
+		*pResultado=(float)numeroA*numeroB;
+		printf("numeroA: %i, numeroB %i, resultado %f",numeroA,numeroB,*pResultado);
+		return 0;
 	}
-*/
 
+	float restar (int numeroA,int numeroB,float* pResultado)
+	{
+		*pResultado=(float)numeroA-numeroB;
 
+		return 0;
+	}
+
+	float sumar (int numeroA,int numeroB,float* pResultado)
+	{
+		*pResultado=(float)numeroA+numeroB;
+
+		return 0;
+	}
 
 
